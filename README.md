@@ -46,20 +46,21 @@ gcloud services enable \
 </details>
 
 <details> <summary>role required on SA </summary>
+  can be assigned using console or shell command
   
 ![image](https://github.com/user-attachments/assets/c680dedd-2457-4997-930a-fe9dbfbce897)
 </details>
 
 <details> <summary> Create WIF taking references from this Google Cloud Offical walkthorugh </summary>
 
-Create WIF taking references from this Google Cloud Offical walkthorugh
+## Watch the Tutorial
 
-[![Video Title](https://img.youtube.com/vi/ZgVhU5qvK1M&t/0.jpg)](https://www.youtube.com/watch?v=ZgVhU5qvK1M&t=517s)
+[![Watch the video](https://img.youtube.com/vi/ZgVhU5qvK1M/0.jpg)](https://www.youtube.com/watch?v=ZgVhU5qvK1M&t)
 
-https://www.youtube.com/watch?v=ZgVhU5qvK1M&t=517s
+Click the image above to watch the tutorial on YouTube.
 
 </details>
-<details> <summary>role required on SA </summary>
+<details> <summary> role required on SA </summary>
   
 Grant the WIF identity `(principalSet://...)` permissions as Workload Identity User on the service account? Example from the README:
 
