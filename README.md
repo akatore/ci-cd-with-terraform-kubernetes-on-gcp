@@ -10,6 +10,10 @@ Artifact Registry:
 
 ![image](https://github.com/user-attachments/assets/69aa5cdc-434c-40c5-b03e-315be17bdc46)
 
+tf state file:
+
+![image](https://github.com/user-attachments/assets/501452fc-1b71-4522-a424-09d564f33646)
+
 GKE Cluster:
 
 ![image](https://github.com/user-attachments/assets/aac8a222-7730-417b-b63d-a1ec89475b2e)
@@ -21,7 +25,7 @@ Nodes (GCE):
 K8s service exposed as type LoadBalancer is accessible via External-IP
 ![image](https://github.com/user-attachments/assets/42180580-d108-4c6d-9ac1-f99a6cf4776c)
 
-Workload:
+Workload management:
 ![image](https://github.com/user-attachments/assets/1083af2b-393b-4a7e-8f0c-a3640976569c)
 
 
