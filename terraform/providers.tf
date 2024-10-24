@@ -14,7 +14,7 @@ provider "google" {
 
 provider "kubernetes" {
   host = google_container_cluster.default.endpoint  # we can fine our host google_container_cluster.default because we have created, we need endpoint of our cluster
-  token = data.google_client_config.current # we can get token from google_client_config
+  token = data.google_client_config.current.access_token # we can get token from google_client_config
   client_certificate = base64decode(google_container_cluster.default.master_auth[0].client_certificate)
   client_key = base64decode(google_container_cluster.default.master_auth[0].client_key)
   cluster_ca_certificate = base64decode(google_container_cluster.default.master_auth[0].cluster_ca_certificate)
