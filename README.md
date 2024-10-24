@@ -45,13 +45,8 @@ gcloud services enable \
   
 </details>
 
-<details> <summary>role required on SA </summary>
-  can be assigned using console or shell command
-  
-![image](https://github.com/user-attachments/assets/c680dedd-2457-4997-930a-fe9dbfbce897)
-</details>
 
-<details> <summary> Create WIF taking references from this Google Cloud Offical walkthorugh </summary>
+<details> <summary> Create WIF & Identity Pool taking references from this GCP  Offical walkthorugh </summary>
 
 ## Watch the Tutorial
 
@@ -59,8 +54,48 @@ gcloud services enable \
 
 Click the image above to watch the tutorial on YouTube.
 
+Outcome:
+
+![image](https://github.com/user-attachments/assets/66fac5d1-60fe-4a67-9c3c-bcccf6a553a7)
+
+![image](https://github.com/user-attachments/assets/46354fc0-2698-4cb1-ac21-1116bf6e277f)
+
+
 </details>
-<details> <summary> role required on SA </summary>
+
+Create SA:
+
+```
+gcloud iam service-accounts create my-service-account \
+  --description="Service account for application access" \
+  --display-name="My Service Account" \
+  --project="$PROJECT_ID"                                                                                                                                                                                                 
+Created service account [my-service-account].
+```
+```
+gcloud iam service-accounts list --project="$PROJECT_ID"                                                                                                             
+DISPLAY NAME: My Service Account
+EMAIL: my-service-account@$PROJECT_ID.iam.gserviceaccount.com
+DISABLED: False
+```
+```
+export SERVICE_ACCOUNT_EMAIL=my-service-account@$PROJECT_ID.iam.gserviceaccount.com
+```
+
+<details> <summary>role required on SA </summary>
+  
+  can be assigned using console or shell command 
+  [create directly using this script](https://github.com/akatore/GCP-projects/blob/main/ci-cd-with-terraform-kubernetes-on-gcp/notes/scipt-to-assign-roles.sh) add as many needed.
+  
+![image](https://github.com/user-attachments/assets/c680dedd-2457-4997-930a-fe9dbfbce897)
+
+![image](https://github.com/user-attachments/assets/4f531775-58eb-4a4d-b121-ba0d9f9dcade)
+
+
+</details>
+
+
+<details> <summary> Adding IAM Policy Binding to a Service Account for Workload Identity Allowing External Identity to Impersonate the Service Account </summary>
   
 Grant the WIF identity `(principalSet://...)` permissions as Workload Identity User on the service account? Example from the README:
 
@@ -70,4 +105,29 @@ gcloud iam service-accounts add-iam-policy-binding "my-service-account@${PROJECT
   --role="roles/iam.workloadIdentityUser" \
   --member="principalSet://iam.googleapis.com/${WORKLOAD_IDENTITY_POOL_ID}/attribute.repository/${REPO}"
 ```
+</details>
+
+<details> <summary> </summary>
+
+  Create a bucket in GCS for storing terraform state file
+
+</details>
+
+<details> <summary> </summary>
+  
+Get your GCP Project number for reference
+</details>
+
+<details> <summary></summary>
+  
+Add secrets to Github Repo
+
+* GCP_PROJECT_ID
+* GCP_TF_STATE_BUCKET
+</details>
+
+<details> <summary></summary>
+  
+write GitHub Actions workflow for deploying our app to GKE using terraform
+
 </details>
