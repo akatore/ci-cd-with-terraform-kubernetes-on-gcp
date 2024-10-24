@@ -42,6 +42,7 @@ resource "google_compute_address" "default" {
 
 resource "kubernetes_service" "appservice" {
   metadata {
+    name = "flaskappservice"  # Explicitly set service name
     labels = {
       "app" = "flaskappdeployment"
     }
