@@ -144,7 +144,8 @@ example:
         service_account: 'tf-gke-test@$GCP_PROJECT_ID.iam.gserviceaccount.com'
 
 ```
-as per below example WIF Identity Pool, ![image](https://github.com/user-attachments/assets/2a154202-784e-4fae-b6d8-08030b667aaa)
+as per below example WIF Identity Pool, ![image](https://github.com/user-attachments/assets/1c0b12c3-cba8-4034-9bd9-45f161600c13)
+
 
 
 </details>
