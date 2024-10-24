@@ -30,7 +30,7 @@ Workload management:
 
 
 
-<details> <summary>roles required </summary>
+<details> <summary>apis required </summary>
 ```
 gcloud services enable \
   cloudresourcemanager.googleapis.com \
@@ -43,3 +43,8 @@ gcloud services enable \
   ![image](https://github.com/user-attachments/assets/88c09f34-ae46-4678-8801-4d325c6aabeb)
   
 </details>
+
+<details> <summary>role required on SA </summary>
+![image](https://github.com/user-attachments/assets/c680dedd-2457-4997-930a-fe9dbfbce897)
+</details>
+
