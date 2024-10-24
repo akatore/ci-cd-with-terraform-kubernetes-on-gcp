@@ -48,7 +48,7 @@ resource "kubernetes_service" "name" {
   }
   spec {
     type = "LoadBalancer"
-    load_balancer_ip = google_compute_address.default.address
+    load_balancer_ip = google_compute_address.appservice.address
     port {
       port = 8080
       target_port = 8080
