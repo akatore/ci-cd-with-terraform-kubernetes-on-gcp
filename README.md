@@ -31,6 +31,7 @@ Workload management:
 
 
 <details> <summary>apis required </summary>
+  
 ```
 gcloud services enable \
   cloudresourcemanager.googleapis.com \
@@ -45,6 +46,27 @@ gcloud services enable \
 </details>
 
 <details> <summary>role required on SA </summary>
+  
 ![image](https://github.com/user-attachments/assets/c680dedd-2457-4997-930a-fe9dbfbce897)
 </details>
 
+<details> <summary> Create WIF taking references from this Google Cloud Offical walkthorugh </summary>
+
+Create WIF taking references from this Google Cloud Offical walkthorugh
+
+[![Video Title](https://img.youtube.com/vi/ZgVhU5qvK1M&t/0.jpg)](https://www.youtube.com/watch?v=ZgVhU5qvK1M&t=517s)
+
+https://www.youtube.com/watch?v=ZgVhU5qvK1M&t=517s
+
+</details>
+<details> <summary>role required on SA </summary>
+  
+Grant the WIF identity `(principalSet://...)` permissions as Workload Identity User on the service account? Example from the README:
+
+```
+gcloud iam service-accounts add-iam-policy-binding "my-service-account@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --project="${PROJECT_ID}" \
+  --role="roles/iam.workloadIdentityUser" \
+  --member="principalSet://iam.googleapis.com/${WORKLOAD_IDENTITY_POOL_ID}/attribute.repository/${REPO}"
+```
+</details>
