@@ -34,13 +34,13 @@ resource "kubernetes_deployment" "name" {
   }    
 }
 
-resource "google_compute_address" "appservice" {
+resource "google_compute_address" "default" {
     name = "ip-for-service"
     region = var.region
   
 }
 
-resource "kubernetes_service" "name" {
+resource "kubernetes_service" "appservice" {
   metadata {
     labels = {
       "app" = "flaskappdeployment"
@@ -48,7 +48,7 @@ resource "kubernetes_service" "name" {
   }
   spec {
     type = "LoadBalancer"
-    load_balancer_ip = google_compute_address.appservice.address
+    load_balancer_ip = google_compute_address.default.address
     port {
       port = 8080
       target_port = 8080
