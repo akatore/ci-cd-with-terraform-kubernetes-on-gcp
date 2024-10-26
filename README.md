@@ -105,6 +105,9 @@ gcloud iam service-accounts add-iam-policy-binding "my-service-account@${PROJECT
   --role="roles/iam.workloadIdentityUser" \
   --member="principalSet://iam.googleapis.com/${WORKLOAD_IDENTITY_POOL_ID}/attribute.repository/${REPO}"
 ```
+
+![image](https://github.com/user-attachments/assets/3a388ee1-47d3-432d-be73-3be7060a919d)
+
 </details>
 
 <details> <summary> </summary>
@@ -114,25 +117,24 @@ gcloud iam service-accounts add-iam-policy-binding "my-service-account@${PROJECT
 
 </details>
 
-<details> <summary> </summary>
+<details> <summary> Get your GCP Project number for reference </summary>
   
-Get your GCP Project number for reference
+
 ```
 gcloud projects describe ${PROJECT_ID}
 ```
 </details>
 
-<details> <summary></summary>
+<details> <summary> Add secrets to Github Repo </summary>
   
-Add secrets to Github Repo
+
 
 * GCP_PROJECT_ID
 * GCP_TF_STATE_BUCKET
 </details>
 
-<details> <summary></summary>
-  
-write GitHub Actions workflow for deploying our app to GKE using terraform
+<details> <summary> Write GitHub Actions workflow for deploying our app to GKE using terraform </summary>
+
 
 > Note: ADD secrets for repo for, `workload_identity_provider` and `service_account`
 ```
