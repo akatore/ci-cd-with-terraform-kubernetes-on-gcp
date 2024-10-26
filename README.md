@@ -110,15 +110,13 @@ gcloud iam service-accounts add-iam-policy-binding "my-service-account@${PROJECT
 
 </details>
 
-<details> <summary> </summary>
+<details> <summary> Create a bucket in GCS for storing terraform state file </summary>
 
-  Create a bucket in GCS for storing terraform state file
   ![image](https://github.com/user-attachments/assets/501452fc-1b71-4522-a424-09d564f33646)
 
 </details>
 
 <details> <summary> Get your GCP Project number for reference </summary>
-  
 
 ```
 gcloud projects describe ${PROJECT_ID}
@@ -126,15 +124,12 @@ gcloud projects describe ${PROJECT_ID}
 </details>
 
 <details> <summary> Add secrets to Github Repo </summary>
-  
-
 
 * GCP_PROJECT_ID
 * GCP_TF_STATE_BUCKET
 </details>
 
 <details> <summary> Write GitHub Actions workflow for deploying our app to GKE using terraform </summary>
-
 
 > Note: ADD secrets for repo for, `workload_identity_provider` and `service_account`
 ```
@@ -147,7 +142,5 @@ example:
 
 ```
 as per below example WIF Identity Pool, ![image](https://github.com/user-attachments/assets/1c0b12c3-cba8-4034-9bd9-45f161600c13)
-
-
 
 </details>
