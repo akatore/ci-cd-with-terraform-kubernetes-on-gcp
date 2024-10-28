@@ -45,27 +45,21 @@ gcloud services enable \
   
 </details>
 
+<details>
 
-<details> <summary> Create WIF & Identity Pool taking references from this GCP  Offical walkthorugh </summary>
+<summary> Set Workload Identity Federation to securely allow a non-GCP identity (like GitHub Actions) to authenticate and impersonate a service account in GCP. Breakdown of each step and how they interconnect:  </summary>
 
-## Watch the Tutorial
+## Create a Service Account with Necessary IAM Roles
+* **Create a Service Account**: Start by creating a service account with the permissions it will need to perform the actions you described:
 
-[![Watch the video](https://img.youtube.com/vi/ZgVhU5qvK1M/0.jpg)](https://www.youtube.com/watch?v=ZgVhU5qvK1M&t)
-
-Click the image above to watch the tutorial on YouTube.
-
-Outcome:
-
-![image](https://github.com/user-attachments/assets/66fac5d1-60fe-4a67-9c3c-bcccf6a553a7)
-
-![image](https://github.com/user-attachments/assets/46354fc0-2698-4cb1-ac21-1116bf6e277f)
-
-
-</details>
-
-Create SA:
-
+```bash
+gcloud iam service-accounts create SERVICE_ACCOUNT_NAME \
+  --display-name "Service account for GitHub Actions"
 ```
+
+<details> <summary> example </summary>
+
+  ```
 gcloud iam service-accounts create my-service-account \
   --description="Service account for application access" \
   --display-name="My Service Account" \
@@ -82,6 +76,21 @@ DISABLED: False
 export SERVICE_ACCOUNT_EMAIL=my-service-account@$PROJECT_ID.iam.gserviceaccount.com
 ```
 
+</details>
+
+* **Assign Roles to the Service Account**: Grant the necessary roles to the service account for accessing GCP resources, such as:
+
+  * `roles/container.admin` (to create GKE clusters)
+  * `roles/compute.admin` (for Compute Engine access)
+  * `roles/artifactregistry.admin` (for creating repositories and pushing images)
+  * `roles/iam.serviceAccountTokenCreator` (for token creation)
+```bash
+
+gcloud projects add-iam-policy-binding PROJECT_ID \
+  --member="serviceAccount:SERVICE_ACCOUNT_NAME@PROJECT_ID.iam.gserviceaccount.com" \
+  --role="roles/ROLE_NAME"
+```
+
 <details> <summary>role required on SA </summary>
   
   can be assigned using console or shell command 
@@ -93,6 +102,62 @@ export SERVICE_ACCOUNT_EMAIL=my-service-account@$PROJECT_ID.iam.gserviceaccount.
 
 
 </details>
+
+## Set Up Workload Identity Federation
+**a. Create an Identity Pool**
+* This step sets up an identity pool in which you define external identities and bind them to the GCP service account.
+* You’ll specify attribute mappings for federated identity claims from GitHub Actions.
+```bash
+gcloud iam workload-identity-pools create IDENTITY_POOL_NAME \
+  --project="PROJECT_ID" \
+  --location="global" \
+  --display-name="GitHub Actions Identity Pool"
+```
+**b. Create an Identity Provider for GitHub (OIDC)**
+* Specify **GitHub** as the identity provider and configure OpenID Connect (OIDC) for token exchange.
+```bash
+gcloud iam workload-identity-pools providers create-oidc PROVIDER_NAME \
+  --project="PROJECT_ID" \
+  --location="global" \
+  --workload-identity-pool="IDENTITY_POOL_NAME" \
+  --display-name="GitHub Provider" \
+  --issuer-uri="https://token.actions.githubusercontent.com" \
+  --attribute-mapping="attribute.sub=assertion.sub,attribute.aud=assertion.aud,attribute.repository=assertion.repository" \
+  --attribute-condition="attribute.repository==\"username/reponame\""
+```
+* **Issuer URI**: This URL allows GitHub to issue tokens for authentication via OIDC.
+## Bind the Principal to the Service Account
+**a. Grant the Service Account Impersonation Role**
+* Next, bind the principal (from the identity pool) to have access to impersonate the service account:
+```
+bash
+gcloud iam service-accounts add-iam-policy-binding SERVICE_ACCOUNT_NAME@PROJECT_ID.iam.gserviceaccount.com \
+  --project="PROJECT_ID" \
+  --role="roles/iam.workloadIdentityUser" \
+  --member="principalSet://iam.googleapis.com/projects/PROJECT_NUMBER/locations/global/workloadIdentityPools/IDENTITY_POOL_NAME/attribute.repository/username/reponame"
+```
+<details> <summary> Create WIF & Identity Pool taking references from this GCP  Offical walkthorugh </summary>
+
+## Watch the Tutorial
+
+[![Watch the video](https://img.youtube.com/vi/ZgVhU5qvK1M/0.jpg)](https://www.youtube.com/watch?v=ZgVhU5qvK1M&t)
+
+Click the image above to watch the tutorial on YouTube.
+
+Outcome:
+
+![image](https://github.com/user-attachments/assets/66fac5d1-60fe-4a67-9c3c-bcccf6a553a7)
+
+![image](https://github.com/user-attachments/assets/46354fc0-2698-4cb1-ac21-1116bf6e277f)
+
+</details>
+
+## Summary
+Now, when a GitHub Action runs, it will use OIDC to authenticate, matching conditions you set up in the identity pool and provider. With this, GitHub can impersonate the GCP service account and access resources securely without using JSON keys.
+
+</details>
+
+
 
 
 <details> <summary> Adding IAM Policy Binding to a Service Account for Workload Identity Allowing External Identity to Impersonate the Service Account </summary>
